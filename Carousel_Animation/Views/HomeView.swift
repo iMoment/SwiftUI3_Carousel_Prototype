@@ -19,7 +19,7 @@ struct HomeView: View {
                 .padding(.top)
             
             // MARK: FoodItem Details with Image
-            FoodItemDetail()
+            FoodItemDetail(currentIndex: self.currentIndex)
             
         }
         .padding()
@@ -35,7 +35,15 @@ struct HomeView_Previews: PreviewProvider {
     }
 }
 
+extension View {
+    func getScreenSize() -> CGRect {
+        return UIScreen.main.bounds
+    }
+}
+
 struct FoodItemDetail: View {
+    var currentIndex: Int
+    
     var body: some View {
         HStack(spacing: 10) {
             
@@ -80,6 +88,31 @@ struct FoodItemDetail: View {
             .frame(maxWidth: .infinity, alignment: .leading)
             
             // MARK: Food Image
+            GeometryReader { proxy in
+                let size = proxy.size
+                
+                Image(foodItems[currentIndex].itemImage)
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+                    .clipShape(Circle())
+                // MARK: Circle Semi Border
+                    .background(
+                        Circle()
+                            .stroke(
+                                LinearGradient(
+                                    colors: [Color.white, Color.white.opacity(0.1), Color.white.opacity(0.1)],
+                                    startPoint: .top,
+                                    endPoint: .bottom)
+                                , lineWidth: 0.7
+                            )
+                            .padding(-15)
+                            .rotationEffect(.init(degrees: -90))
+                    )
+                    .frame(width: size.width, height: size.width * 1.8)
+                    .frame(maxHeight: .infinity, alignment: .center)
+                    .offset(x: 70)
+            }
+            .frame(height: (getScreenSize().width / 2) * 2)
         }
     }
 }
