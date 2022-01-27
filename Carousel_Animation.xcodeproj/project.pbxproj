@@ -11,6 +11,7 @@
 		917C340027A3345C00892480 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 917C33FF27A3345C00892480 /* ContentView.swift */; };
 		917C340227A3345D00892480 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 917C340127A3345D00892480 /* Assets.xcassets */; };
 		917C340527A3345D00892480 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 917C340427A3345D00892480 /* Preview Assets.xcassets */; };
+		917C341027A3362C00892480 /* FoodItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 917C340F27A3362C00892480 /* FoodItem.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,6 +20,7 @@
 		917C33FF27A3345C00892480 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		917C340127A3345D00892480 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		917C340427A3345D00892480 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		917C340F27A3362C00892480 /* FoodItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodItem.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,6 +55,8 @@
 			children = (
 				917C33FD27A3345C00892480 /* Carousel_AnimationApp.swift */,
 				917C33FF27A3345C00892480 /* ContentView.swift */,
+				917C340C27A335E000892480 /* Model */,
+				917C340B27A335DC00892480 /* Views */,
 				917C340127A3345D00892480 /* Assets.xcassets */,
 				917C340327A3345D00892480 /* Preview Content */,
 			);
@@ -65,6 +69,21 @@
 				917C340427A3345D00892480 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		917C340B27A335DC00892480 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		917C340C27A335E000892480 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				917C340F27A3362C00892480 /* FoodItem.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -138,6 +157,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				917C340027A3345C00892480 /* ContentView.swift in Sources */,
+				917C341027A3362C00892480 /* FoodItem.swift in Sources */,
 				917C33FE27A3345C00892480 /* Carousel_AnimationApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
