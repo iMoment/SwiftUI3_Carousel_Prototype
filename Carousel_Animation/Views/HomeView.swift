@@ -14,6 +14,9 @@ struct HomeView: View {
     @State var backgroundOffset: CGFloat = 0
     @State var textColor: Color = Color.white
     
+    @State var animateText: Bool = false
+    @State var animateImage: Bool = false
+    
     var body: some View {
         VStack {
             
@@ -21,6 +24,9 @@ struct HomeView: View {
                 .font(.largeTitle.bold())
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .frame(height: 100, alignment: .top)
+                .offset(y: animateText ? 200 : 0)
+                .clipped()
+                .animation(.easeInOut, value: animateText)
                 .padding(.top)
             
             // MARK: FoodItem Details with Image
@@ -74,6 +80,7 @@ struct HomeView: View {
                         .resizable()
                         .aspectRatio(contentMode: .fill)
                         .clipShape(Circle())
+                        .rotationEffect(.init(degrees: animateImage ? 360 : 0))
                     // MARK: Circle Semi Border
                         .background(
                             Circle()
@@ -101,6 +108,9 @@ struct HomeView: View {
                 .foregroundStyle(.secondary)
                 .lineSpacing(8)
                 .lineLimit(3)
+                .offset(y: animateText ? 200 : 0)
+                .clipped()
+                .animation(.easeInOut, value: animateText)
                 .padding(.vertical)
             
         }
@@ -130,42 +140,50 @@ struct HomeView: View {
         .gesture(
             DragGesture()
                 .onEnded({ value in
+                    
+                    if animateImage { return }
+                    
                     let translation = value.translation.height
                     
-                    if translation < 0 && -translation > 50 {
+                    if translation < 0 && -translation > 50 && (currentIndex < (foodItems.count - 1)){
                         // MARK: Swiped Up
-                        withAnimation(.easeIn(duration: 0.6)) {
-                            backgroundOffset += -getScreenSize().height
-                        }
-                        // Text Color Change
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
-                            // Update index
-                            currentIndex += 1
-                            
-                            withAnimation(.easeInOut) {
-                                textColor = (textColor == Color.black ? Color.white : Color.black)
-                            }
-                        }
+                        AnimateSlide(moveUp: true)
                     }
                     
-                    if translation > 0 && translation > 50 {
+                    if translation > 0 && translation > 50 && currentIndex > 0 {
                         // MARK: Swiped Down
-                        withAnimation(.easeIn(duration: 0.6)) {
-                            backgroundOffset += getScreenSize().height
-                        }
-                        
-                        // Text Color Change
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
-                            // Update index
-                            currentIndex -= 1
-                            
-                            withAnimation(.easeInOut) {
-                                textColor = (textColor == Color.black ? Color.white : Color.black)
-                            }
-                        }
+                        AnimateSlide(moveUp: false)
                     }
                 })
         )
+    }
+    
+    func AnimateSlide(moveUp: Bool = true) {
+        animateText = true
+        
+        withAnimation(.easeIn(duration: 0.6)) {
+            backgroundOffset += (moveUp ? -getScreenSize().height : getScreenSize().height)
+        }
+        
+        withAnimation(.interactiveSpring(response: 1.5, dampingFraction: 0.8, blendDuration: 0.8)) {
+            animateImage = true
+        }
+        
+        // Text Color Change
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
+            animateText = false
+            
+            // Update index
+            currentIndex = (moveUp ? (currentIndex + 1) : (currentIndex - 1))
+            
+            withAnimation(.easeInOut) {
+                textColor = (textColor == Color.black ? Color.white : Color.black)
+            }
+        }
+        // Reset State of image
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
+            animateImage = false
+        }
     }
 }
 
